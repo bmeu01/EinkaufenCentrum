@@ -1,5 +1,6 @@
-package fr.jobas;
+package fr.jobas.src;
 
+import fr.jobas.SystemInfo;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
