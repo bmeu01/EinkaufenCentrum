@@ -1,6 +1,5 @@
-package fr.jobas.src;
+package fr.jobas;
 
-import fr.jobas.SystemInfo;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -11,6 +10,12 @@ import javafx.stage.Stage;
 public class App extends Application {
 
   @Override
+  public void init() {
+    // Read the files and create the objects
+  }
+
+  // Start the UI
+  @Override
   public void start(Stage stage) {
     var javaVersion = SystemInfo.javaVersion();
     var javafxVersion = SystemInfo.javafxVersion();
@@ -20,6 +25,11 @@ public class App extends Application {
     var scene = new Scene(new StackPane(label), 640, 480);
     stage.setScene(scene);
     stage.show();
+  }
+
+  @Override
+  public void stop() {
+    // Save the map and kill the sim
   }
 
   public static void main(String[] args) {
