@@ -1,7 +1,7 @@
 fr/jobas/model/TypeSalle.class
 fr/jobas/model/TypeFourmis.class
-fr/jobas/SystemInfo.class
 module-info.class
+fr/jobas/ui/GrapheView.class
 fr/jobas/model/Graph.class
 fr/jobas/model/Fourmis.class
 fr/jobas/model/Arete.class

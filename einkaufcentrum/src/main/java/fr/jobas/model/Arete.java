@@ -13,6 +13,14 @@ public class Arete {
   private float largeur;
   private float longueur;
   private int nbPheromones;
+  Noeud depart;
+  Noeud arrive;
+
+  public Arete(Noeud depart, Noeud arrive) {
+    this(UUID.randomUUID(), 0.0f, 'O', 20, 0.0f, Statut.LIBRE, 1.0f, 10.0f);
+    this.depart = depart;
+    this.arrive = arrive;
+  }
 
   public Arete(
       UUID arete,

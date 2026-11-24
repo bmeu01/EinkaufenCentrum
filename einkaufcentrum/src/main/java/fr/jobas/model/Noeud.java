@@ -16,6 +16,20 @@ public class Noeud {
   private Statut statut;
   private List<Arete> aretes;
 
+  // Constructeur simple pour créer un noeud au clic de la souris
+  public Noeud() {
+    this(
+        UUID.randomUUID(),
+        0.0f,
+        false,
+        TypeSalle.MOYEN,
+        'O',
+        50,
+        0.0f,
+        Statut.LIBRE,
+        new ArrayList<>());
+  }
+
   public Noeud(
       UUID idNoeud,
       float tauxAcide,
