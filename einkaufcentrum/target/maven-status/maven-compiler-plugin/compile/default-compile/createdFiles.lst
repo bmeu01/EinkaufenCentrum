@@ -1,9 +1,10 @@
-fr/jobas/Arret.class
-fr/jobas/TypeFourmis.class
+fr/jobas/model/TypeSalle.class
+fr/jobas/model/TypeFourmis.class
 fr/jobas/SystemInfo.class
 module-info.class
-fr/jobas/Statut.class
-fr/jobas/Neud.class
-fr/jobas/Fourmis.class
+fr/jobas/model/Graph.class
+fr/jobas/model/Fourmis.class
+fr/jobas/model/Arete.class
 fr/jobas/App.class
-fr/jobas/TypeSalle.class
+fr/jobas/model/Statut.class
+fr/jobas/model/Noeud.class

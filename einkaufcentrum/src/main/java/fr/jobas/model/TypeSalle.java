@@ -1,4 +1,4 @@
-package fr.jobas;
+package fr.jobas.model;
 
 public enum TypeSalle {
   FAIBLE,
