@@ -22,7 +22,7 @@ public class Noeud {
         UUID.randomUUID(),
         0.0f,
         false,
-        TypeSalle.PASSAGE,
+        TypeSalle.VIDE,
         'O',
         50,
         0.0f,

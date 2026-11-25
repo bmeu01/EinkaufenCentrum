@@ -148,7 +148,7 @@ public class GrapheView extends BorderPane {
   }
 
   private void clicSurNoeudPourNid(Noeud noeudClique) {
-    if (noeudClique.getTypeSalle() != TypeSalle.PASSAGE) {
+    if (noeudClique.getTypeSalle() != TypeSalle.VIDE) {
       actualiserEtatEtMessage("Ce noeud est déjà occupé (" + noeudClique.getTypeSalle() + ")");
       return;
     }
@@ -168,7 +168,7 @@ public class GrapheView extends BorderPane {
   }
 
   private void clicSurNoeudPourNourriture(Noeud noeudClique) {
-    if (noeudClique.getTypeSalle() != TypeSalle.PASSAGE) {
+    if (noeudClique.getTypeSalle() != TypeSalle.VIDE) {
       actualiserEtatEtMessage("Ce noeud est déjà occupé (" + noeudClique.getTypeSalle() + ")");
       return;
     }
