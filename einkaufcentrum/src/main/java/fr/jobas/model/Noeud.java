@@ -9,7 +9,7 @@ public class Noeud {
   private UUID idNoeud;
   private float tauxAcide;
   private boolean capteurAcide;
-  private TypeSalle type;
+  private TypeSalle typeSalle;
   private char accessibilite;
   private int capaciteMax;
   private float tauxOccupation;
@@ -22,7 +22,7 @@ public class Noeud {
         UUID.randomUUID(),
         0.0f,
         false,
-        TypeSalle.MOYEN,
+        TypeSalle.PASSAGE,
         'O',
         50,
         0.0f,
@@ -34,7 +34,7 @@ public class Noeud {
       UUID idNoeud,
       float tauxAcide,
       boolean capteurAcide,
-      TypeSalle type,
+      TypeSalle typeSalle,
       char accessibilite,
       int capaciteMax,
       float tauxOccupation,
@@ -43,12 +43,20 @@ public class Noeud {
     this.idNoeud = idNoeud;
     this.tauxAcide = tauxAcide;
     this.capteurAcide = capteurAcide;
-    this.type = type;
+    this.typeSalle = typeSalle;
     this.accessibilite = accessibilite;
     this.capaciteMax = capaciteMax;
     this.tauxOccupation = tauxOccupation;
     this.statut = statut;
     this.aretes = (aretes != null) ? aretes : new ArrayList<>();
+  }
+
+  public TypeSalle getTypeSalle() {
+    return typeSalle;
+  }
+
+  public void setTypeSalle(TypeSalle typeSalle) {
+    this.typeSalle = typeSalle;
   }
 
   public UUID getIdNoeud() {

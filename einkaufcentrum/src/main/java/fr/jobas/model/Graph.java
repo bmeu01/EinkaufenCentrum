@@ -5,12 +5,14 @@ import java.util.List;
 
 public class Graph {
 
-  private final List<Noeud> noeuds;
-  private final List<Arete> aretes;
+  List<Noeud> noeuds;
+  List<Arete> aretes;
+  List<Nid> nids;
 
   public Graph() {
     this.noeuds = new ArrayList<>();
     this.aretes = new ArrayList<>();
+    this.nids = new ArrayList<>();
   }
 
   // Ajoute un noeud dans la liste du graphe
