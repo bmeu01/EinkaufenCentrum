@@ -1,7 +1,7 @@
 package fr.jobas.model;
 
 public enum TypeSalle {
-  PASSAGE,
+  VIDE,
   NID,
   NOURRITURE,
 }
