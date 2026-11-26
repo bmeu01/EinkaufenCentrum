@@ -3,18 +3,12 @@ package fr.jobas.model;
 import java.util.UUID;
 
 /** arete */
-public class Arete {
-  private UUID arete;
-  private float tauxAcide;
-  private char accessibilite;
-  private int capaciteMax;
-  private float tauxOccupation;
-  private Statut statut;
+public class Arete extends Racine {
   private float largeur;
   private float longueur;
   private int nbPheromones;
-  Noeud depart;
-  Noeud arrive;
+  private Noeud depart;
+  private Noeud arrive;
 
   public Arete(Noeud depart, Noeud arrive) {
     this(UUID.randomUUID(), 0.0f, 'O', 20, 0.0f, Statut.LIBRE, 1.0f, 10.0f);
@@ -31,62 +25,9 @@ public class Arete {
       Statut statut,
       float largeur,
       float longueur) {
-    this.arete = arete;
-    this.tauxAcide = tauxAcide;
-    this.accessibilite = accessibilite;
-    this.capaciteMax = capaciteMax;
-    this.tauxOccupation = tauxOccupation;
-    this.statut = statut;
+    super(arete, tauxAcide, accessibilite, capaciteMax, tauxOccupation, statut);
     this.largeur = largeur;
     this.longueur = longueur;
-  }
-
-  public UUID getArete() {
-    return arete;
-  }
-
-  public void setArete(UUID arete) {
-    this.arete = arete;
-  }
-
-  public float getTauxAcide() {
-    return tauxAcide;
-  }
-
-  public void setTauxAcide(float tauxAcide) {
-    this.tauxAcide = tauxAcide;
-  }
-
-  public char getAccessibilite() {
-    return accessibilite;
-  }
-
-  public void setAccessibilite(char accessibilite) {
-    this.accessibilite = accessibilite;
-  }
-
-  public int getCapaciteMax() {
-    return capaciteMax;
-  }
-
-  public void setCapaciteMax(int capaciteMax) {
-    this.capaciteMax = capaciteMax;
-  }
-
-  public float getTauxOccupation() {
-    return tauxOccupation;
-  }
-
-  public void setTauxOccupation(float tauxOccupation) {
-    this.tauxOccupation = tauxOccupation;
-  }
-
-  public Statut getStatut() {
-    return statut;
-  }
-
-  public void setStatut(Statut statut) {
-    this.statut = statut;
   }
 
   public float getLargeur() {
@@ -104,4 +45,15 @@ public class Arete {
   public void setLongueur(float longueur) {
     this.longueur = longueur;
   }
+
+  public Noeud getDepart() {
+    return depart;
+  }
+
+  public Noeud getArrive() {
+    return arrive;
+  }
+
+
+  
 }
