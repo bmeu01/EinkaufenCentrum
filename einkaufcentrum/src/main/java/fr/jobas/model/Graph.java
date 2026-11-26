@@ -8,8 +8,10 @@ public class Graph {
   List<Noeud> noeuds;
   List<Arete> aretes;
   List<Nid> nids;
+  List<Fourmis> fourmis;
 
   public Graph() {
+    super();
     this.noeuds = new ArrayList<>();
     this.aretes = new ArrayList<>();
     this.nids = new ArrayList<>();
@@ -29,11 +31,29 @@ public class Graph {
     }
   }
 
+  public void ajouterFourmi(Fourmis fourmi) {
+    if (fourmi != null && !this.fourmis.contains(fourmi)) {
+      this.fourmis.add(fourmi);
+    }
+  }
+  
   public List<Noeud> getNoeuds() {
     return this.noeuds;
   }
 
   public List<Arete> getAretes() {
     return this.aretes;
+  }
+  
+  public List<Nid> getNids() {
+    return this.nids;
+  }
+
+  public List<Fourmis> getFourmis() {
+    return this.fourmis;
+  }
+
+  public void setFourmis(List<Fourmis> fourmis) {
+    this.fourmis = fourmis;
   }
 }

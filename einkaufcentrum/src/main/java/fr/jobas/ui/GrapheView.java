@@ -6,7 +6,6 @@ import fr.jobas.model.Graph;
 import fr.jobas.model.Nid;
 import fr.jobas.model.Noeud;
 import fr.jobas.model.Nourriture;
-import fr.jobas.model.TypeSalle;
 import fr.jobas.simulation.MoteurSimulation;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,8 +33,6 @@ public class GrapheView extends BorderPane {
   private final Label texteInfo = new Label();
 
   private final Map<Noeud, Circle> cerclesParNoeud = new HashMap<>();
-  private final Map<Noeud, Nid> nidsParNoeud = new HashMap<>();
-  private final Map<Noeud, Nourriture> nourrituresParNoeud = new HashMap<>();
 
   private final Button btnNoeud = new Button("Ajouter Noeud");
   private final Button btnArete = new Button("Ajouter Arête");
@@ -45,6 +42,8 @@ public class GrapheView extends BorderPane {
 
   private int modeActuel = MODE_AUCUN;
   private Noeud premierNoeud = null;
+  private int nbNids = 0;
+  private int nbNourritures = 0;
 
   public GrapheView(Graph graph, GameState state) {
     this.graph = graph;
@@ -85,19 +84,19 @@ public class GrapheView extends BorderPane {
         event -> {
           modeActuel = MODE_NID;
           annulerSelectionArete();
-          actualiserEtatEtMessage("Clique sur un noeud de passage pour y placer un nid");
+          actualiserEtatEtMessage("Clique dans la zone noire pour poser un nid");
         });
 
     btnNourriture.setOnAction(
         event -> {
           modeActuel = MODE_NOURRITURE;
           annulerSelectionArete();
-          actualiserEtatEtMessage("Clique sur un noeud de passage pour y placer de la nourriture");
+          actualiserEtatEtMessage("Clique dans la zone noire pour poser de la nourriture");
         });
 
     btnStart.setOnAction(
         event -> {
-          if (nidsParNoeud.isEmpty() || nourrituresParNoeud.isEmpty()) {
+          if (nbNids == 0 || nbNourritures == 0) {
             actualiserEtatEtMessage("Impossible de lancer");
             return;
           }
@@ -116,79 +115,57 @@ public class GrapheView extends BorderPane {
   private void configurerClicTerrain() {
     zoneDessin.setOnMouseClicked(
         event -> {
+          double x = event.getX();
+          double y = event.getY();
+
           if (modeActuel == MODE_NOEUD) {
-            creerEtAfficherNoeud(event.getX(), event.getY());
+            Noeud noeud = new Noeud();
+            ajouterSommetVisuel(noeud, x, y, 15, Color.CORNFLOWERBLUE, Color.WHITE, 2);
+            actualiserEtatEtMessage("Noeud ajouté");
+          } else if (modeActuel == MODE_NID) {
+            nbNids++;
+            Nid nid = new Nid("Equipe " + nbNids);
+            ajouterSommetVisuel(nid, x, y, 18, Color.CRIMSON, Color.GOLD, 3);
+            actualiserEtatEtMessage("Nid ajouté (" + nid.getNomEquipe() + ")");
+          } else if (modeActuel == MODE_NOURRITURE) {
+            nbNourritures++;
+            Nourriture nourriture = new Nourriture(100);
+            ajouterSommetVisuel(nourriture, x, y, 17, Color.LIMEGREEN, Color.DARKGREEN, 3);
+            actualiserEtatEtMessage("Nourriture ajoutée");
           }
         });
   }
 
-  private void creerEtAfficherNoeud(double clicX, double clicY) {
-    Noeud nouveauNoeud = new Noeud();
-    graph.ajouterNoeud(nouveauNoeud);
+  private void ajouterSommetVisuel(
+      Noeud sommet,
+      double clicX,
+      double clicY,
+      double rayon,
+      Color couleurFond,
+      Color couleurBordure,
+      double epaisseurBordure) {
+    graph.ajouterNoeud(sommet);
 
-    Circle cercle = new Circle(clicX, clicY, 15, Color.CORNFLOWERBLUE);
-    cercle.setStroke(Color.WHITE);
-    cercle.setStrokeWidth(2);
+    Circle cercle = new Circle(clicX, clicY, rayon, couleurFond);
+    cercle.setStroke(couleurBordure);
+    cercle.setStrokeWidth(epaisseurBordure);
 
-    cerclesParNoeud.put(nouveauNoeud, cercle);
+    cerclesParNoeud.put(sommet, cercle);
 
     cercle.setOnMouseClicked(
         event -> {
           event.consume();
           if (modeActuel == MODE_ARETE) {
-            clicSurNoeudPourArete(nouveauNoeud);
-          } else if (modeActuel == MODE_NID) {
-            clicSurNoeudPourNid(nouveauNoeud);
-          } else if (modeActuel == MODE_NOURRITURE) {
-            clicSurNoeudPourNourriture(nouveauNoeud);
+            clicSurNoeudPourArete(sommet);
           }
         });
 
     zoneDessin.getChildren().add(cercle);
   }
 
-  private void clicSurNoeudPourNid(Noeud noeudClique) {
-    if (noeudClique.getTypeSalle() != TypeSalle.VIDE) {
-      actualiserEtatEtMessage("Ce noeud est déjà occupé (" + noeudClique.getTypeSalle() + ")");
-      return;
-    }
-
-    noeudClique.setTypeSalle(TypeSalle.NID);
-    int numeroEquipe = nidsParNoeud.size() + 1;
-    Nid nouveauNid = new Nid("Equipe " + numeroEquipe, noeudClique);
-    nidsParNoeud.put(noeudClique, nouveauNid);
-
-    Circle cercle = cerclesParNoeud.get(noeudClique);
-    cercle.setFill(Color.CRIMSON);
-    cercle.setStroke(Color.GOLD);
-    cercle.setStrokeWidth(3);
-    cercle.setRadius(18);
-
-    actualiserEtatEtMessage("Nid ajouté (" + nouveauNid.getNomEquipe() + ")");
-  }
-
-  private void clicSurNoeudPourNourriture(Noeud noeudClique) {
-    if (noeudClique.getTypeSalle() != TypeSalle.VIDE) {
-      actualiserEtatEtMessage("Ce noeud est déjà occupé (" + noeudClique.getTypeSalle() + ")");
-      return;
-    }
-
-    noeudClique.setTypeSalle(TypeSalle.NOURRITURE);
-    Nourriture nouvelleNourriture = new Nourriture(noeudClique, 100);
-    nourrituresParNoeud.put(noeudClique, nouvelleNourriture);
-
-    Circle cercle = cerclesParNoeud.get(noeudClique);
-    cercle.setFill(Color.LIMEGREEN);
-    cercle.setStroke(Color.DARKGREEN);
-    cercle.setStrokeWidth(3);
-    cercle.setRadius(17);
-
-    actualiserEtatEtMessage("Nourriture ajoutée");
-  }
-
   private String getTexteManquant() {
-    boolean manqueNid = nidsParNoeud.isEmpty();
-    boolean manqueNourriture = nourrituresParNoeud.isEmpty();
+    boolean manqueNid = nbNids == 0;
+    boolean manqueNourriture = nbNourritures == 0;
 
     if (manqueNid && manqueNourriture) {
       return " (Manque : 1 nid et 1 nourriture)";
@@ -201,7 +178,7 @@ public class GrapheView extends BorderPane {
   }
 
   private void actualiserEtatEtMessage(String actionEnCours) {
-    boolean pret = !nidsParNoeud.isEmpty() && !nourrituresParNoeud.isEmpty();
+    boolean pret = nbNids > 0 && nbNourritures > 0;
     btnStart.setDisable(!pret);
     texteInfo.setText(actionEnCours + getTexteManquant());
   }
@@ -238,16 +215,12 @@ public class GrapheView extends BorderPane {
   private void annulerSelectionArete() {
     if (premierNoeud != null) {
       Color couleurBordure;
-      switch (premierNoeud.getTypeSalle()) {
-        case NID:
-          couleurBordure = Color.GOLD;
-          break;
-        case NOURRITURE:
-          couleurBordure = Color.DARKGREEN;
-          break;
-        default:
-          couleurBordure = Color.WHITE;
-          break;
+      if (premierNoeud instanceof Nid) {
+        couleurBordure = Color.GOLD;
+      } else if (premierNoeud instanceof Nourriture) {
+        couleurBordure = Color.DARKGREEN;
+      } else {
+        couleurBordure = Color.WHITE;
       }
       cerclesParNoeud.get(premierNoeud).setStroke(couleurBordure);
     }

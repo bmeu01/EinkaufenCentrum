@@ -1,22 +1,31 @@
 package fr.jobas.model;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
-public class Nid {
+public class Nid extends Noeud {
 
-  private final String nomEquipe;
-  private final Noeud noeud;
+  private String nomEquipe;
 
-  public Nid(String nomEquipe, Noeud noeud) {
+  public Nid(String nomEquipe) {
+    super(
+        UUID.randomUUID(),
+        0.0f,
+        false,
+        TypeSalle.NID,
+        'O',
+        50,
+        0.0f,
+        Statut.LIBRE,
+        new ArrayList<>());
     this.nomEquipe = nomEquipe;
-    this.noeud = noeud;
   }
 
   public String getNomEquipe() {
     return nomEquipe;
   }
 
-  public Noeud getNoeud() {
-    return noeud;
+  public void setNomEquipe(String nomEquipe) {
+    this.nomEquipe = nomEquipe;
   }
 }

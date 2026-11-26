@@ -1,25 +1,26 @@
 package fr.jobas.model;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
-public class Nourriture {
+import fr.jobas.model.TypeSalle;
 
-  private final UUID uuid;
-  private final Noeud noeud;
+public class Nourriture extends Noeud {
+
   private int quantite;
 
-  public Nourriture(Noeud noeud, int quantite) {
-    this.uuid = UUID.randomUUID();
-    this.noeud = noeud;
+  public Nourriture(int quantite) {
+    super(
+        UUID.randomUUID(),
+        0.0f,
+        false,
+        TypeSalle.NOURRITURE,
+        'O',
+        50,
+        0.0f,
+        Statut.LIBRE,
+        new ArrayList<>());
     this.quantite = quantite;
-  }
-
-  public UUID getUuid() {
-    return uuid;
-  }
-
-  public Noeud getNoeud() {
-    return noeud;
   }
 
   public int getQuantite() {

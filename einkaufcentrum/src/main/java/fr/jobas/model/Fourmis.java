@@ -1,6 +1,8 @@
 package fr.jobas.model;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Fourmis {
   TypeFourmis typeFourmis;
@@ -13,27 +15,30 @@ public class Fourmis {
     this.typeFourmis = typefourmis;
     this.idFourmis = idFourmis; 
     this.aNourriture = false; 
-    this.position = position; 
+    this.position = position;
   } 
 
-  public Racine changerPosition(){
-    if this.position.isNeud {
-      Racine newPosition; 
-      for (Arete areteDuNoeud : noeud.getAretes()){  
-         //choisir une arete (equiprobabilité) et affecter a newPosition
-         this.position = newPosition;
+  public Racine changerPosition() {
+    if (this.position instanceof Noeud) {
+      Noeud noeud = (Noeud) this.position;
+      List<Arete> aretes = noeud.getAretes();
+      if (aretes != null && !aretes.isEmpty()) {
+        int index = ThreadLocalRandom.current().nextInt(aretes.size());
+        this.position = aretes.get(index);
+      }
+    } else if (this.position instanceof Arete) {
+      Arete arete = (Arete) this.position;
+      Noeud depart = arete.getDepart();
+      Noeud arrive = arete.getArrive();
+      if (depart != null && arrive != null) {
+        this.position = ThreadLocalRandom.current().nextBoolean() ? depart : arrive;
+      } else if (depart != null) {
+        this.position = depart;
+      } else if (arrive != null) {
+        this.position = arrive;
       }
     }
-    if this.position.isArete {
-      for (Arete areteDuNoeud : noeud.getAretes()){  
-          //choisir un neud  (equiprobabilité) et affecter a newPosition
-          this.position = newPosition;
-    }
-    
-    // Regarder ce qu'il ya dans les arete du neud dans lequel elle est 
-    // S'engager dans l'arete 
-    //rgarder si le neud est accessible 
-    //rentrer dans le neud 
-    return position;
+
+    return this.position;
   }
 }
