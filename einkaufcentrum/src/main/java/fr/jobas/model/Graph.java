@@ -25,7 +25,7 @@ public class Graph {
   // Ajoute une arête dans la liste du graphe
   public void ajouterArete(Arete arete) {
     if (arete != null && !this.aretes.contains(arete)) {
-      this.aretes.add(arete);
+      this.aretes.add(arete); 
     }
   }
 

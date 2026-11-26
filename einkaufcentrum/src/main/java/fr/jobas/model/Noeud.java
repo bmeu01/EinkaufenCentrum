@@ -64,11 +64,11 @@ public class Noeud extends Racine {
     this.typeSalle = type;
   }
 
-  public List<Arete> getaretes() {
+  public List<Arete> getAretes() {
     return aretes;
   }
 
-  public void setaretes(List<Arete> aretes) {
+  public void setAretes(List<Arete> aretes) {
     this.aretes = aretes;
   }
 }
